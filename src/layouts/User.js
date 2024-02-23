@@ -1,40 +1,31 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, Route, Routes, Navigate, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 // reactstrap components
 import { Container } from "reactstrap";
 // core components
-import AdminNavbar from "components/Navbars/AdminNavbar.js";
-import AdminFooter from "components/Footers/AdminFooter.js";
-import AdminSidebar from "components/Sidebar/AdminSidebar.js";
-
-import { adminRoutes, adminRoutesSidebar } from "routes.js";
-
-import { ColorRing } from 'react-loader-spinner';
+import { userRoutes } from "routes.js";
+import UserSidebar from "components/Sidebar/UserSidebar";
+import UserNavbar from "components/Navbars/UserNavbar";
+import UserFooter from "components/Footers/UserFooter.js";
 
 import { ToastContainer, toast } from 'react-toastify'
 
-const Admin = (props) => {
+const UserLayout = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
   const [token, setToken] = useState(JSON.parse(localStorage.getItem("auth")) || "");
   const [role, setRole] = useState(localStorage.getItem("role") || "");
   const navigate = useNavigate();
 
-
   useEffect(() => {
     if (token === "") {
       toast.warning("Log in first");
       navigate("/auth/login");
     } else {
-      if (role === "superAdmin") {
+      if (role !== "user") {
         toast.warning("Unauthorized");
-        navigate("/superAdmin");
-      }
-      else if (role === "user") {
-        toast.warning("Unauthorized");
-        navigate("/user");
+        navigate("/admin");
       }
     }
     document.documentElement.scrollTop = 0;
@@ -42,9 +33,9 @@ const Admin = (props) => {
     mainContent.current.scrollTop = 0;
   }, [location]);
 
-  const getRoutes = (adminRoutes) => {
-    return adminRoutes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+  const getRoutes = (userRoutes) => {
+    return userRoutes.map((prop, key) => {
+      if (prop.layout === "/user") {
         return (
           <Route path={prop.path} element={prop.component} key={key} exact />
         );
@@ -55,12 +46,12 @@ const Admin = (props) => {
   };
 
   const getBrandText = (path) => {
-    for (let i = 0; i < adminRoutes.length; i++) {
+    for (let i = 0; i < userRoutes.length; i++) {
       if (
-        props?.location?.pathname.indexOf(adminRoutes[i].layout + adminRoutes[i].path) !==
+        props?.location?.pathname.indexOf(userRoutes[i].layout + userRoutes[i].path) !==
         -1
       ) {
-        return adminRoutes[i].name;
+        return userRoutes[i].name;
       }
     }
     return "Brand";
@@ -69,30 +60,30 @@ const Admin = (props) => {
   return (
     <>
       <ToastContainer position="top-center" autoClose={2000} />
-      <AdminSidebar
+      <UserSidebar
         {...props}
-        routes={adminRoutesSidebar}
+        routes={userRoutes}
         logo={{
-          innerLink: "/admin",
+          innerLink: "/user/index",
           imgSrc: require("../assets/img/brand/favicon.png"),
           imgAlt: "...",
         }}
       />
       <div className="main-content" ref={mainContent}>
-        <AdminNavbar
+        <UserNavbar
           {...props}
           brandText={getBrandText(props?.location?.pathname)}
         />
         <Routes>
-          {getRoutes(adminRoutes)}
-          <Route path="*" element={<Navigate to="/admin" replace />} />
+          {getRoutes(userRoutes)}
+          <Route path="*" element={<Navigate to="/user/index" replace />} />
         </Routes>
         <Container fluid>
-          <AdminFooter />
+          <UserFooter />
         </Container>
       </div>
     </>
   );
 };
 
-export default Admin;
+export default UserLayout;

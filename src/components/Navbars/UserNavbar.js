@@ -19,15 +19,14 @@ import {
   Media,
 } from "reactstrap";
 
-const AdminNavbar = (props) => {
+const UserNavbar = (props) => {
   const [username, setUsername] = useState(localStorage.getItem("username") || "");
   const navigate = useNavigate();
+
   const handleLogout = async (e) => {
     e.preventDefault();
-
     localStorage.removeItem("auth");
     localStorage.removeItem("role");
-    localStorage.removeItem("username");
     navigate("/auth/login");
   };
 
@@ -74,19 +73,19 @@ const AdminNavbar = (props) => {
                 <DropdownItem className="noti-title" header tag="div">
                   <h6 className="text-overflow m-0">Welcome!</h6>
                 </DropdownItem>
-                <DropdownItem to="/admin/profile" tag={Link}>
+                <DropdownItem to="/user/profile" tag={Link}>
                   <i className="ni ni-single-02" />
                   <span>My profile</span>
                 </DropdownItem>
-                {/* <DropdownItem to="/admin/profile" tag={Link}>
+                {/* <DropdownItem to="/user/profile" tag={Link}>
                   <i className="ni ni-settings-gear-65" />
                   <span>Settings</span>
                 </DropdownItem>
-                <DropdownItem to="/admin/profile" tag={Link}>
+                <DropdownItem to="/user/profile" tag={Link}>
                   <i className="ni ni-calendar-grid-58" />
                   <span>Activity</span>
                 </DropdownItem>
-                <DropdownItem to="/admin/profile" tag={Link}>
+                <DropdownItem to="/user/profile" tag={Link}>
                   <i className="ni ni-support-16" />
                   <span>Support</span>
                 </DropdownItem> */}
@@ -104,4 +103,4 @@ const AdminNavbar = (props) => {
   );
 };
 
-export default AdminNavbar;
+export default UserNavbar;

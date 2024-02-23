@@ -1,23 +1,7 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 /*eslint-disable*/
 import { useState } from "react";
-import { NavLink as NavLinkRRD, Link } from "react-router-dom";
+import { NavLink as NavLinkRRD, Link, useNavigate } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
 
@@ -54,7 +38,7 @@ import {
 
 var ps;
 
-const Sidebar = (props) => {
+const UserSidebar = (props) => {
   const [collapseOpen, setCollapseOpen] = useState();
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
@@ -100,6 +84,14 @@ const Sidebar = (props) => {
     };
   }
 
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    const navigate = useNavigate();
+    localStorage.removeItem("auth");
+    localStorage.removeItem("role");
+    navigate("/auth/login");
+  };
+
   return (
     <Navbar
       className="navbar-vertical fixed-left navbar-light bg-white"
@@ -127,7 +119,7 @@ const Sidebar = (props) => {
         ) : null}
         {/* User */}
         <Nav className="align-items-center d-md-none">
-          <UncontrolledDropdown nav>
+          {/* <UncontrolledDropdown nav>
             <DropdownToggle nav className="nav-link-icon">
               <i className="ni ni-bell-55" />
             </DropdownToggle>
@@ -141,14 +133,14 @@ const Sidebar = (props) => {
               <DropdownItem divider />
               <DropdownItem>Something else here</DropdownItem>
             </DropdownMenu>
-          </UncontrolledDropdown>
+          </UncontrolledDropdown> */}
           <UncontrolledDropdown nav>
             <DropdownToggle nav>
               <Media className="align-items-center">
                 <span className="avatar avatar-sm rounded-circle">
                   <img
                     alt="..."
-                    src={require("../../assets/img/theme/team-1-800x800.jpg")}
+                    src={require("../../assets/img/theme/images.png")}
                   />
                 </span>
               </Media>
@@ -157,24 +149,24 @@ const Sidebar = (props) => {
               <DropdownItem className="noti-title" header tag="div">
                 <h6 className="text-overflow m-0">Welcome!</h6>
               </DropdownItem>
-              <DropdownItem to="/admin/user-profile" tag={Link}>
+              <DropdownItem to="/user/profile" tag={Link}>
                 <i className="ni ni-single-02" />
                 <span>My profile</span>
               </DropdownItem>
-              <DropdownItem to="/admin/user-profile" tag={Link}>
+              {/* <DropdownItem to="/user/profile" tag={Link}>
                 <i className="ni ni-settings-gear-65" />
                 <span>Settings</span>
               </DropdownItem>
-              <DropdownItem to="/admin/user-profile" tag={Link}>
+              <DropdownItem to="/user/profile" tag={Link}>
                 <i className="ni ni-calendar-grid-58" />
                 <span>Activity</span>
               </DropdownItem>
-              <DropdownItem to="/admin/user-profile" tag={Link}>
+              <DropdownItem to="/user/profile" tag={Link}>
                 <i className="ni ni-support-16" />
                 <span>Support</span>
-              </DropdownItem>
+              </DropdownItem> */}
               <DropdownItem divider />
-              <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+              <DropdownItem onClick={(e) => handleLogout(e)}>
                 <i className="ni ni-user-run" />
                 <span>Logout</span>
               </DropdownItem>
@@ -236,29 +228,21 @@ const Sidebar = (props) => {
           {/* Navigation */}
           <Nav className="mb-md-3" navbar>
             <NavItem>
-              <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/overview?ref=adr-admin-sidebar">
+              <NavLink href="https://just.edu.bd" target="_blank">
                 <i className="ni ni-spaceship" />
-                Getting started
+                JUST Website
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/colors?ref=adr-admin-sidebar">
-                <i className="ni ni-palette" />
-                Foundation
+              <NavLink href="http://exam.just.edu.bd" target="_blank">
+                <i className="ni ni-spaceship" />
+                Exam Controller
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/#/documentation/alerts?ref=adr-admin-sidebar">
-                <i className="ni ni-ui-04" />
-                Components
-              </NavLink>
-            </NavItem>
-          </Nav>
-          <Nav className="mb-md-3" navbar>
-            <NavItem className="active-pro active">
-              <NavLink href="https://www.creative-tim.com/product/argon-dashboard-pro-react?ref=adr-admin-sidebar">
+              <NavLink href="https://career.just.edu.bd" target="_blank">
                 <i className="ni ni-spaceship" />
-                Upgrade to PRO
+                Career Website
               </NavLink>
             </NavItem>
           </Nav>
@@ -268,11 +252,11 @@ const Sidebar = (props) => {
   );
 };
 
-Sidebar.defaultProps = {
+UserSidebar.defaultProps = {
   routes: [{}],
 };
 
-Sidebar.propTypes = {
+UserSidebar.propTypes = {
   // links that will be displayed inside the component
   routes: PropTypes.arrayOf(PropTypes.object),
   logo: PropTypes.shape({
@@ -289,4 +273,4 @@ Sidebar.propTypes = {
   }),
 };
 
-export default Sidebar;
+export default UserSidebar;

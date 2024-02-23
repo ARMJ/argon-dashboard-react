@@ -35,7 +35,7 @@ import Header from "components/Headers/Header.js";
 import { ToastContainer, toast } from 'react-toastify';
 import DashboardHeader from "components/Headers/DashboardHeader";
 
-const Index = (props) => {
+const UserDashboard = (props) => {
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
 
@@ -323,4 +323,4 @@ const Index = (props) => {
   );
 };
 
-export default Index;
+export default UserDashboard;

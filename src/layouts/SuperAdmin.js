@@ -9,13 +9,13 @@ import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import AdminFooter from "components/Footers/AdminFooter.js";
 import AdminSidebar from "components/Sidebar/AdminSidebar.js";
 
-import { adminRoutes, adminRoutesSidebar } from "routes.js";
+import { superAdminRoutesSidebar, superAdminRoutes } from "routes.js";
 
 import { ColorRing } from 'react-loader-spinner';
 
 import { ToastContainer, toast } from 'react-toastify'
 
-const Admin = (props) => {
+const SuperAdmin = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
   const [token, setToken] = useState(JSON.parse(localStorage.getItem("auth")) || "");
@@ -28,13 +28,12 @@ const Admin = (props) => {
       toast.warning("Log in first");
       navigate("/auth/login");
     } else {
-      if (role === "superAdmin") {
-        toast.warning("Unauthorized");
-        navigate("/superAdmin");
-      }
-      else if (role === "user") {
+      if (role == "user") {
         toast.warning("Unauthorized");
         navigate("/user");
+      } else if (role === "admin") {
+        toast.warning("Unauthorized");
+        navigate("/admin");
       }
     }
     document.documentElement.scrollTop = 0;
@@ -42,9 +41,9 @@ const Admin = (props) => {
     mainContent.current.scrollTop = 0;
   }, [location]);
 
-  const getRoutes = (adminRoutes) => {
-    return adminRoutes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+  const getRoutes = (superAdminRoutes) => {
+    return superAdminRoutes.map((prop, key) => {
+      if (prop.layout === "/superAdmin") {
         return (
           <Route path={prop.path} element={prop.component} key={key} exact />
         );
@@ -55,12 +54,12 @@ const Admin = (props) => {
   };
 
   const getBrandText = (path) => {
-    for (let i = 0; i < adminRoutes.length; i++) {
+    for (let i = 0; i < superAdminRoutes.length; i++) {
       if (
-        props?.location?.pathname.indexOf(adminRoutes[i].layout + adminRoutes[i].path) !==
+        props?.location?.pathname.indexOf(superAdminRoutes[i].layout + superAdminRoutes[i].path) !==
         -1
       ) {
-        return adminRoutes[i].name;
+        return superAdminRoutes[i].name;
       }
     }
     return "Brand";
@@ -71,7 +70,7 @@ const Admin = (props) => {
       <ToastContainer position="top-center" autoClose={2000} />
       <AdminSidebar
         {...props}
-        routes={adminRoutesSidebar}
+        routes={superAdminRoutesSidebar}
         logo={{
           innerLink: "/admin",
           imgSrc: require("../assets/img/brand/favicon.png"),
@@ -84,8 +83,8 @@ const Admin = (props) => {
           brandText={getBrandText(props?.location?.pathname)}
         />
         <Routes>
-          {getRoutes(adminRoutes)}
-          <Route path="*" element={<Navigate to="/admin" replace />} />
+          {getRoutes(superAdminRoutes)}
+          <Route path="*" element={<Navigate to="/superAdmin" replace />} />
         </Routes>
         <Container fluid>
           <AdminFooter />
@@ -95,4 +94,4 @@ const Admin = (props) => {
   );
 };
 
-export default Admin;
+export default SuperAdmin;

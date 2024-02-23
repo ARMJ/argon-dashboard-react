@@ -16,7 +16,7 @@ import {
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
 
-const Profile = () => {
+const UserProfile = () => {
   return (
     <>
       <UserHeader />
@@ -310,4 +310,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default UserProfile;
