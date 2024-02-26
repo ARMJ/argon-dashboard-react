@@ -74,7 +74,7 @@ const Admin = (props) => {
         routes={adminRoutesSidebar}
         logo={{
           innerLink: "/admin",
-          imgSrc: require("../assets/img/brand/favicon.png"),
+          imgSrc: require("../assets/img/brand/JUST_logo.jpg"),
           imgAlt: "...",
         }}
       />

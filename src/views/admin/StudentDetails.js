@@ -41,7 +41,7 @@ const StudentDetails = () => {
       setData({ msg: response.data.msg, student: response.data.student, isLoaded: true });
       toast.success(response.data.msg);
       if (response.data.student.picture) {
-        setPictureSrc("../../" + response.data.student.picture);
+        setPictureSrc(response.data.student.picture);
       }
     } catch (error) {
       toast.error(error.message);
@@ -68,7 +68,7 @@ const StudentDetails = () => {
                     {data.student.picture ? (<img
                       alt="..."
                       className="rounded-circle"
-                      src={require("../../assets/img/profile/65cc45e48cb89752a997e7da_my-passport-photo (1).jpg")}
+                      src={pictureSrc}
                     />) : (<img
                       alt="..."
                       className="rounded-circle"

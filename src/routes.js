@@ -1,6 +1,6 @@
 
 import AdminDashboard from "views/admin/Dashboard.js";
-import AdminProfile from "views/admin/Profile.js";
+import AdminProfile from "views/superAdmin/Profile.js";
 import Admins from "views/superAdmin/Admins.js";
 import AddAdmin from "views/superAdmin/AddAdmin.js";
 import AllStudents from "views/admin/Students.js";
@@ -37,13 +37,6 @@ var adminRoutes = [
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: <AdminDashboard />,
-    layout: "/admin",
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: <AdminProfile />,
     layout: "/admin",
   },
   {
@@ -98,13 +91,6 @@ var adminRoutesSidebar = [
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: <AdminDashboard />,
-    layout: "/admin",
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    icon: "ni ni-single-02 text-primary",
-    component: <AdminProfile />,
     layout: "/admin",
   },
   {

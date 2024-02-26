@@ -53,8 +53,7 @@ const StudentAddInfo = () => {
         if (response.data.student.files.thumbFinger != "") setIsFingerUploaded(true);
       }
       if (response.data.student.picture) {
-        setPictureSrc("../../" + response.data.student.picture);
-        console.log(pictureSrc);
+        setPictureSrc(response.data.student.picture);
       }
       toast.success(response.data.msg);
     } catch (error) {
@@ -69,7 +68,7 @@ const StudentAddInfo = () => {
       formData.append('fingerprints', e.target[0].files[0]);
       formData.append('fingerprints', e.target[0].files[1]);
       try {
-        const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-fingerprints", formData, axiosConfig);
+        const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-fingerprints-fs", formData, axiosConfig);
         setUploadMessage(response.data.msg);
         toast.success(response.data.msg);
         window.location.reload();
@@ -84,12 +83,11 @@ const StudentAddInfo = () => {
 
   const handleSignatureUpload = async (e) => {
     e.preventDefault();
-    console.log(e.target[0].files[0]);
     if (e.target[0].files.length === 1) {
       const formData = new FormData();
       formData.append('signature', e.target[0].files[0]);
       try {
-        const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-signature", formData, axiosConfig);
+        const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-signature-fs", formData, axiosConfig);
         setUploadMessage(response.data.msg);
         toast.success(response.data.msg);
         window.location.reload();
@@ -107,7 +105,7 @@ const StudentAddInfo = () => {
       const formData = new FormData();
       formData.append('picture', e.target[0].files[0]);
       try {
-        const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-picture", formData, axiosConfig);
+        const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-picture-fs", formData, axiosConfig);
         setUploadMessage(response.data.msg);
         toast.success(response.data.msg);
         window.location.reload();
@@ -139,7 +137,10 @@ const StudentAddInfo = () => {
                     {data.student.picture ? (<img
                       alt="..."
                       className="rounded-circle"
-                      src={require("../../assets/img/profile/65cc45e48cb89752a997e7da_my-passport-photo (1).jpg")}
+                      src={pictureSrc}
+                      onError={(e) => {
+                        e.target.src = require("../../assets/img/theme/images.png")
+                      }}
                     />) : (<img
                       alt="..."
                       className="rounded-circle"

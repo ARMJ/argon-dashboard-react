@@ -73,7 +73,7 @@ const SuperAdmin = (props) => {
         routes={superAdminRoutesSidebar}
         logo={{
           innerLink: "/admin",
-          imgSrc: require("../assets/img/brand/favicon.png"),
+          imgSrc: require("../assets/img/brand/JUST_logo.jpg"),
           imgAlt: "...",
         }}
       />
