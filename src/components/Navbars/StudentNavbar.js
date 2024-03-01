@@ -19,8 +19,9 @@ import {
   Media,
 } from "reactstrap";
 
-const UserNavbar = (props) => {
+const StudentNavbar = (props) => {
   const [username, setUsername] = useState(localStorage.getItem("username") || "");
+  const [pictureSrc] = useState(localStorage.getItem("pic") || "../../assets/img/theme/images.png");
   const navigate = useNavigate();
 
   const handleLogout = async (e) => {
@@ -59,7 +60,7 @@ const UserNavbar = (props) => {
                   <span className="avatar avatar-sm rounded-circle">
                     <img
                       alt="..."
-                      src={require("../../assets/img/theme/images.png")}
+                      src={pictureSrc}
                     />
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
@@ -73,7 +74,7 @@ const UserNavbar = (props) => {
                 <DropdownItem className="noti-title" header tag="div">
                   <h6 className="text-overflow m-0">Welcome!</h6>
                 </DropdownItem>
-                <DropdownItem to="/user/profile" tag={Link}>
+                <DropdownItem to="/student" tag={Link}>
                   <i className="ni ni-single-02" />
                   <span>My profile</span>
                 </DropdownItem>
@@ -103,4 +104,4 @@ const UserNavbar = (props) => {
   );
 };
 
-export default UserNavbar;
+export default StudentNavbar;

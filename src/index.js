@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import AdminLayout from "layouts/Admin.js";
 import SuperAdminLayout from "layouts/SuperAdmin.js";
-import UserLayout from "layouts/User.js";
+import StudentLayout from "layouts/Student.js";
 import AuthLayout from "layouts/Auth.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -20,7 +20,7 @@ root.render(
     <Routes>
       <Route path="/admin/*" element={<AdminLayout />} />
       <Route path="/superAdmin/*" element={<SuperAdminLayout />} />
-      <Route path="/user/*" element={<UserLayout />} />
+      <Route path="/student/*" element={<StudentLayout />} />
       <Route path="/auth/*" element={<AuthLayout />} />
       <Route path="*" element={<Navigate to="/auth/login" replace />} />
     </Routes>

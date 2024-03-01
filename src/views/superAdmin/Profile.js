@@ -14,13 +14,13 @@ import {
   Col,
 } from "reactstrap";
 // core components
-import UserHeader from "components/Headers/UserHeader.js";
+import SuperAdminHeader from "components/Headers/SuperAdminHeader.js";
 
 
 const AdminProfile = () => {
   return (
     <>
-      <UserHeader />
+      <SuperAdminHeader />
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>

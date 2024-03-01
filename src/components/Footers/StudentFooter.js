@@ -4,7 +4,7 @@
 // reactstrap components
 import { Container, Row, Col, Nav, NavItem, NavLink } from "reactstrap";
 
-const UserFooter = () => {
+const StudentFooter = () => {
   return (
     <footer className="footer">
       <Row className="align-items-center justify-content-xl-between">
@@ -70,4 +70,4 @@ const UserFooter = () => {
   );
 };
 
-export default UserFooter;
+export default StudentFooter;

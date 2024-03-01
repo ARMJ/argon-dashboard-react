@@ -4,14 +4,14 @@ import { useLocation, Route, Routes, Navigate, useNavigate } from "react-router-
 // reactstrap components
 import { Container } from "reactstrap";
 // core components
-import { userRoutes } from "routes.js";
-import UserSidebar from "components/Sidebar/UserSidebar";
-import UserNavbar from "components/Navbars/UserNavbar";
-import UserFooter from "components/Footers/UserFooter.js";
+import { studentRoutes } from "routes.js";
+import StudentSidebar from "components/Sidebar/StudentSidebar";
+import StudentNavbar from "components/Navbars/StudentNavbar";
+import StudentFooter from "components/Footers/StudentFooter.js";
 
 import { ToastContainer, toast } from 'react-toastify'
 
-const UserLayout = (props) => {
+const StudentLayout = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
   const [token, setToken] = useState(JSON.parse(localStorage.getItem("auth")) || "");
@@ -23,7 +23,7 @@ const UserLayout = (props) => {
       toast.warning("Log in first");
       navigate("/auth/login");
     } else {
-      if (role !== "user") {
+      if (role == "admin" || role == "superAdmin") {
         toast.warning("Unauthorized");
         navigate("/admin");
       }
@@ -33,9 +33,9 @@ const UserLayout = (props) => {
     mainContent.current.scrollTop = 0;
   }, [location]);
 
-  const getRoutes = (userRoutes) => {
-    return userRoutes.map((prop, key) => {
-      if (prop.layout === "/user") {
+  const getRoutes = (studentRoutes) => {
+    return studentRoutes.map((prop, key) => {
+      if (prop.layout === "/student") {
         return (
           <Route path={prop.path} element={prop.component} key={key} exact />
         );
@@ -46,12 +46,12 @@ const UserLayout = (props) => {
   };
 
   const getBrandText = (path) => {
-    for (let i = 0; i < userRoutes.length; i++) {
+    for (let i = 0; i < studentRoutes.length; i++) {
       if (
-        props?.location?.pathname.indexOf(userRoutes[i].layout + userRoutes[i].path) !==
+        props?.location?.pathname.indexOf(studentRoutes[i].layout + studentRoutes[i].path) !==
         -1
       ) {
-        return userRoutes[i].name;
+        return studentRoutes[i].name;
       }
     }
     return "Brand";
@@ -60,9 +60,9 @@ const UserLayout = (props) => {
   return (
     <>
       <ToastContainer position="top-center" autoClose={2000} />
-      <UserSidebar
+      <StudentSidebar
         {...props}
-        routes={userRoutes}
+        routes={studentRoutes}
         logo={{
           innerLink: "/user/index",
           imgSrc: require("../assets/img/brand/JUST_logo.jpg"),
@@ -70,20 +70,20 @@ const UserLayout = (props) => {
         }}
       />
       <div className="main-content" ref={mainContent}>
-        <UserNavbar
+        <StudentNavbar
           {...props}
           brandText={getBrandText(props?.location?.pathname)}
         />
         <Routes>
-          {getRoutes(userRoutes)}
+          {getRoutes(studentRoutes)}
           <Route path="*" element={<Navigate to="/user/index" replace />} />
         </Routes>
         <Container fluid>
-          <UserFooter />
+          <StudentFooter />
         </Container>
       </div>
     </>
   );
 };
 
-export default UserLayout;
+export default StudentLayout;

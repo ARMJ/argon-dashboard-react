@@ -24,7 +24,7 @@ import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
 
 
-const StudentLogin = () => {
+const AdminLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(false);
   const navigate = useNavigate();
@@ -33,22 +33,21 @@ const StudentLogin = () => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    let roll = e.target[0].value;
+    let email = e.target[0].value;
     let password = e.target[1].value;
 
-    if (roll.length > 0 && password.length > 0) {
+    if (email.length > 0 && password.length > 0) {
       const authData = {
-        roll: roll,
+        email: email,
         password: password,
         remember: remember
       };
       try {
-        const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL+"login", authData);
+        const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL+"adminLogin", authData);
         toast.success(response.data.msg);
         localStorage.setItem('auth', JSON.stringify(response.data.token));
         localStorage.setItem('role', response.data.role);
         localStorage.setItem('username', response.data.name);
-        localStorage.setItem('pic', response.data.pictureUrl);
         navigate(response.data.navigate);
       } catch (err) {
         toast.error(err.message);
@@ -120,13 +119,13 @@ const StudentLogin = () => {
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                      <i className="ni ni-hat-3" />
+                      <i className="ni ni-email-83" />
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
-                    placeholder="Roll"
-                    type="text"
-                    autoComplete="100100"
+                    placeholder="Email"
+                    type="email"
+                    autoComplete="new-email"
                   />
                 </InputGroup>
               </FormGroup>
@@ -175,7 +174,7 @@ const StudentLogin = () => {
             </Form>
           </CardBody>
         </Card>
-        {/* <Row className="mt-3">
+        <Row className="mt-3">
           <Col xs="6">
             <a
               className="text-light"
@@ -185,18 +184,18 @@ const StudentLogin = () => {
               <small>Forgot password?</small>
             </a>
           </Col>
-          <Col className="text-right" xs="6">
+          {/* <Col className="text-right" xs="6">
             <a
               className="text-light"
               href="/auth/register"
             >
               <small>Create new account</small>
             </a>
-          </Col>
-        </Row> */}
+          </Col> */}
+        </Row>
       </Col>
     </>
   );
 };
 
-export default StudentLogin;
+export default AdminLogin;

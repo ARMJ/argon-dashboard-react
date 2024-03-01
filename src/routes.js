@@ -6,28 +6,29 @@ import AddAdmin from "views/superAdmin/AddAdmin.js";
 import AllStudents from "views/admin/Students.js";
 import StudentDetails from "views/admin/StudentDetails.js";
 import StudentAddInfo from "views/admin/StudentAddInfo.js";
-import UserDashboard from "views/user/Dashboard.js";
-import UserProfile from "views/user/Profile.js";
+import UpdateInfo from "views/student/UpdateInfo.js";
+import StudentProfile from "views/student/Profile.js";
 import Maps from "views/examples/Maps.js";
 import Register from "views/auth/Register.js";
-import Login from "views/auth/Login.js";
+import StudentLogin from "views/auth/Login.js";
+import AdminLogin from "views/auth/Admin.js";
 import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
 
-var userRoutes = [
+var studentRoutes = [
   {
     path: "/",
-    name: "Dashboard",
-    icon: "ni ni-tv-2 text-primary",
-    component: <UserDashboard />,
-    layout: "/user",
-  },
-  {
-    path: "/profile",
     name: "Profile",
     icon: "ni ni-single-02 text-yellow",
-    component: <UserProfile />,
-    layout: "/user",
+    component: <StudentProfile />,
+    layout: "/student",
+  },
+  {
+    path: "/update-info",
+    name: "Update Information",
+    icon: "ni ni-tv-2 text-primary",
+    component: <UpdateInfo />,
+    layout: "/student",
   },
 ];
 
@@ -195,15 +196,22 @@ var authRoutes = [
     path: "/login",
     name: "Login",
     icon: "ni ni-key-25 text-info",
-    component: <Login />,
+    component: <StudentLogin />,
     layout: "/auth",
   },
   {
-    path: "/register",
-    name: "Register",
-    icon: "ni ni-circle-08 text-pink",
-    component: <Register />,
+    path: "/admin",
+    name: "Login",
+    icon: "ni ni-key-25 text-info",
+    component: <AdminLogin />,
     layout: "/auth",
-  }
+  },
+  // {
+  //   path: "/register",
+  //   name: "Register",
+  //   icon: "ni ni-circle-08 text-pink",
+  //   component: <Register />,
+  //   layout: "/auth",
+  // }
 ];
-export { adminRoutes, adminRoutesSidebar, superAdminRoutesSidebar, superAdminRoutes, userRoutes, authRoutes };
+export { adminRoutes, adminRoutesSidebar, superAdminRoutesSidebar, superAdminRoutes, studentRoutes, authRoutes };

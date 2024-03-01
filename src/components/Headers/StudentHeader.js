@@ -1,9 +1,11 @@
 
 
 // reactstrap components
+import { useState } from "react";
 import { Button, Container, Row, Col } from "reactstrap";
 
-const UserHeader = () => {
+const StudentHeader = () => {
+  const [username] = useState(localStorage.getItem('username') || "#");
   return (
     <>
       <div
@@ -11,7 +13,7 @@ const UserHeader = () => {
         style={{
           minHeight: "600px",
           backgroundImage:
-            "url(" + require("../../assets/img/theme/1704965064262_2048.png") + ")",
+            "url(" + require("../../assets/img/theme/cover.jpg") + ")",
           backgroundSize: "cover",
           backgroundPosition: "center top",
         }}
@@ -22,17 +24,17 @@ const UserHeader = () => {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="7" md="10">
-              <h1 className="display-2 text-white">Hello Super Admin</h1>
+              <h1 className="display-2 text-white">Hello {username}</h1>
               <p className="text-white mt-0 mb-5">
                 This is your profile page.
               </p>
-              <Button
+              {/* <Button
                 color="info"
                 href="#"
                 onClick={(e) => e.preventDefault()}
               >
                 Edit profile
-              </Button>
+              </Button> */}
             </Col>
           </Row>
         </Container>
@@ -41,4 +43,4 @@ const UserHeader = () => {
   );
 };
 
-export default UserHeader;
+export default StudentHeader;

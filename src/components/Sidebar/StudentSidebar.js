@@ -38,9 +38,19 @@ import {
 
 var ps;
 
-const UserSidebar = (props) => {
+const StudentSidebar = (props) => {
   const [collapseOpen, setCollapseOpen] = useState();
   // verifies if routeName is the one active (in browser input)
+  const [pictureSrc] = useState(localStorage.getItem("pic") || "../../assets/img/theme/images.png");
+  const navigate = useNavigate();
+  const handleLogout = (e) => {
+    e.preventDefault();
+    // const navigate = useNavigate();
+    localStorage.removeItem("auth");
+    localStorage.removeItem("role");
+    localStorage.removeItem("username");
+    navigate("/auth/login");
+  };
   const activeRoute = (routeName) => {
     return props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
   };
@@ -84,13 +94,6 @@ const UserSidebar = (props) => {
     };
   }
 
-  const handleLogout = async (e) => {
-    e.preventDefault();
-    const navigate = useNavigate();
-    localStorage.removeItem("auth");
-    localStorage.removeItem("role");
-    navigate("/auth/login");
-  };
 
   return (
     <Navbar
@@ -140,7 +143,7 @@ const UserSidebar = (props) => {
                 <span className="avatar avatar-sm rounded-circle">
                   <img
                     alt="..."
-                    src={require("../../assets/img/theme/images.png")}
+                    src={pictureSrc}
                   />
                 </span>
               </Media>
@@ -149,7 +152,7 @@ const UserSidebar = (props) => {
               <DropdownItem className="noti-title" header tag="div">
                 <h6 className="text-overflow m-0">Welcome!</h6>
               </DropdownItem>
-              <DropdownItem to="/user/profile" tag={Link}>
+              <DropdownItem to="/student" tag={Link}>
                 <i className="ni ni-single-02" />
                 <span>My profile</span>
               </DropdownItem>
@@ -252,11 +255,11 @@ const UserSidebar = (props) => {
   );
 };
 
-UserSidebar.defaultProps = {
+StudentSidebar.defaultProps = {
   routes: [{}],
 };
 
-UserSidebar.propTypes = {
+StudentSidebar.propTypes = {
   // links that will be displayed inside the component
   routes: PropTypes.arrayOf(PropTypes.object),
   logo: PropTypes.shape({
@@ -273,4 +276,4 @@ UserSidebar.propTypes = {
   }),
 };
 
-export default UserSidebar;
+export default StudentSidebar;
