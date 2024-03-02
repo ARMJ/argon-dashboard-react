@@ -69,7 +69,7 @@ const Students = () => {
         { full: "Marketing", short: "MKT" },
         { full: "Faculty of Veterinary Medicine", short: "DVM" }
     ];
-    const sessions = ["2014-15", "2015-16", "2016-17", "2017-18", "2018-19", "2019-20", "2020-21", "2021-22", "2022-23"];
+    const sessions = ["2014-15", "2015-16", "2016-17", "2017-18", "2018-19", "2019-20", "2020-21", "2021-22", "2022-23", "2023-24"];
 
     const handleSearchStudents = async (e) => {
         e.preventDefault();
@@ -120,12 +120,12 @@ const Students = () => {
                             <i className="ni ni-settings" />
                         </DropdownToggle>
                         <DropdownMenu className="dropdown-menu-arrow" right>
-                            <DropdownItem to={"/" + role + "/studentDetails/" + student._id} tag={Link}
+                            <DropdownItem to={"/" + role + "/studentDetails/" + student._id} target="_blank" tag={Link}
                             >
                                 <i className="ni ni-single-02" />
                                 <span>Details</span>
                             </DropdownItem>
-                            <DropdownItem to={"/" + role + "/studentAddInfo/" + student._id} tag={Link}>
+                            <DropdownItem to={"/" + role + "/studentAddInfo/" + student._id} target="_blank" tag={Link}>
                                 <i className="ni ni-cloud-upload-96" />
                                 <span>Add Info</span>
                             </DropdownItem>
@@ -138,7 +138,7 @@ const Students = () => {
 
     useEffect(() => {
 
-    });
+    }, []);
 
 
     return (

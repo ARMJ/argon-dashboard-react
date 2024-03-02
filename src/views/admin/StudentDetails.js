@@ -49,10 +49,8 @@ const StudentDetails = () => {
   }
 
   useEffect(() => {
-    if (!data.isLoaded) {
-      fetchStudentDetails(id);
-    }
-  });
+    fetchStudentDetails(id);
+  }, []);
 
   return (
     <>

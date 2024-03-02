@@ -65,15 +65,6 @@ const AddAdmin = () => {
         }
     };
 
-    useEffect(() => {
-        if (token === "") {
-            toast.warn("Log in first");
-            navigate("/auth/login");
-        }
-        if (role === "admin") navigate("/admin");
-        else if (role === "user") navigate("/user");
-    }, []);
-
 
     return (
         <>

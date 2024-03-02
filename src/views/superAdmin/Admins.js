@@ -98,15 +98,8 @@ const Admins = () => {
     });
 
     useEffect(() => {
-        if (role === "admin") {
-            navigate("/admin");
-        } else if (role === "user") {
-            navigate("/user");
-        }
-        if (data.isLoaded === false) {
-            fetchAdmins();
-        }
-    });
+        fetchAdmins();
+    }, []);
 
 
     return (

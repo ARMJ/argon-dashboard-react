@@ -44,7 +44,7 @@ const AdminDashboard = (props) => {
       },
     };
     try {
-      const response = await axios.get(process.env.REACT_APP_SERVER_BASE_URL+"admin/dashboard", axiosConfig);
+      const response = await axios.get(process.env.REACT_APP_SERVER_BASE_URL + "admin/dashboard", axiosConfig);
       setData({ msg: response.data.msg, dashboardData: response.data.dashboardData, total: response.data.Totalstudents, isLoaded: true });
       toast.success(response.data.msg);
       chartExample2.data = {
@@ -80,11 +80,9 @@ const AdminDashboard = (props) => {
   })
 
   useEffect(() => {
-    if (data.isLoaded == false) {
-      setSpinnerVisiblity(true);
-      fetchDashboardData();
-    }
-  });
+    setSpinnerVisiblity(true);
+    fetchDashboardData();
+  }, []);
 
   return (
     <>
