@@ -15,7 +15,7 @@ import {
     Container
 } from "reactstrap";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -27,7 +27,6 @@ const AddAdmin = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const [token] = useState(JSON.parse(localStorage.getItem("auth")) || "");
-    const [role] = useState(localStorage.getItem("role") || "");
     let axiosConfig = {
         headers: {
             'Authorization': `Bearer ${token}`
@@ -54,7 +53,7 @@ const AddAdmin = () => {
                     toast.success(response.data.msg);
                     navigate("/superAdmin/admins");
                 } catch (err) {
-                    toast.error(err.message);
+                    toast.error(err.response.data.msg);
                 }
 
             } else {

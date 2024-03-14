@@ -18,7 +18,7 @@ import {
 
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
@@ -28,8 +28,8 @@ const StudentLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(false);
   const navigate = useNavigate();
-  const [token, setToken] = useState(JSON.parse(localStorage.getItem("auth")) || "");
-  const [role, setRole] = useState(localStorage.getItem("role") || "");
+  const [token] = useState(JSON.parse(localStorage.getItem("auth")) || "");
+  const [role] = useState(localStorage.getItem("role") || "");
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -48,10 +48,12 @@ const StudentLogin = () => {
         localStorage.setItem('auth', JSON.stringify(response.data.token));
         localStorage.setItem('role', response.data.role);
         localStorage.setItem('username', response.data.name);
-        localStorage.setItem('pic', response.data.pictureUrl);
+        if(response.data.pictureUrl !== null){
+          localStorage.setItem('pic', response.data.pictureUrl);
+        }
         navigate(response.data.navigate);
       } catch (err) {
-        toast.error(err.message);
+        toast.error(err.response.data.msg);
       }
     } else {
       toast.error("Please fill in all the fields");
@@ -125,7 +127,7 @@ const StudentLogin = () => {
                   </InputGroupAddon>
                   <Input
                     placeholder="Roll"
-                    type="text"
+                    type="number"
                     autoComplete="100100"
                   />
                 </InputGroup>

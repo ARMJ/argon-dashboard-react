@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useLocation, Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 // reactstrap components
 import { Container } from "reactstrap";
@@ -11,15 +11,12 @@ import AdminSidebar from "components/Sidebar/AdminSidebar.js";
 
 import { adminRoutes, adminRoutesSidebar } from "routes.js";
 
-import { ColorRing } from 'react-loader-spinner';
-
 import { ToastContainer, toast } from 'react-toastify'
 
 const Admin = (props) => {
   const mainContent = React.useRef(null);
-  const location = useLocation();
-  const [token, setToken] = useState(JSON.parse(localStorage.getItem("auth")) || "");
-  const [role, setRole] = useState(localStorage.getItem("role") || "");
+  const [token] = useState(JSON.parse(localStorage.getItem("auth")) || "");
+  const [role] = useState(localStorage.getItem("role") || "");
   const navigate = useNavigate();
 
 
@@ -40,7 +37,7 @@ const Admin = (props) => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
-  }, [location]);
+  }, []);
 
   const getRoutes = (adminRoutes) => {
     return adminRoutes.map((prop, key) => {

@@ -20,8 +20,8 @@ import {
 } from "reactstrap";
 
 const StudentNavbar = (props) => {
-  const [username, setUsername] = useState(localStorage.getItem("username") || "");
-  const [pictureSrc] = useState(localStorage.getItem("pic") || "../../assets/img/theme/images.png");
+  const [username] = useState(localStorage.getItem("username") || "");
+  const [pictureSrc] = useState(localStorage.getItem("pic") || null);
   const navigate = useNavigate();
 
   const handleLogout = async (e) => {
@@ -58,10 +58,13 @@ const StudentNavbar = (props) => {
               <DropdownToggle className="pr-0" nav>
                 <Media className="align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
-                    <img
+                    {pictureSrc == null ? (<img
+                      alt="..."
+                      src={require("../../assets/img/theme/images.png")}
+                    />) : (<img
                       alt="..."
                       src={pictureSrc}
-                    />
+                    />)}
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">

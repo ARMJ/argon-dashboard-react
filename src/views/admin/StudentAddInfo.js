@@ -17,23 +17,20 @@ import {
 // core components
 import Header from "components/Headers/Header.js";
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { useParams } from "react-router-dom";
+import { toast } from 'react-toastify';
 import axios from "axios";
 import { Link } from "react-router-dom";
 
 const StudentAddInfo = () => {
   const { id } = useParams();
-  const [token, setToken] = useState(JSON.parse(localStorage.getItem("auth")) || "");
+  const [token] = useState(JSON.parse(localStorage.getItem("auth")) || "");
   const [role] = useState(localStorage.getItem("role") || "");
   const [data, setData] = useState({ msg: "", student: {}, isLoaded: false });
-  const [pictureSrc, setPictureSrc] = useState("../../assets/img/theme/images.png");
-  const [uploadMessage, setUploadMessage] = useState("");
-  const [fingerprints, setFingerprints] = useState([]);
+  const [pictureSrc, setPictureSrc] = useState();
+  const [setUploadMessage] = useState("");
   const [isSignatureUploaded, setIsSignatureUploaded] = useState(false);
   const [isFingerUploaded, setIsFingerUploaded] = useState(false);
-  const [username, serUsername] = useState(localStorage.getItem("username") || "");
-  const navigate = useNavigate();
 
 
   let axiosConfig = {
@@ -49,15 +46,15 @@ const StudentAddInfo = () => {
       const response = await axios.get(process.env.REACT_APP_SERVER_BASE_URL + "admin/studentById?id=" + id, axiosConfig);
       setData({ msg: response.data.msg, student: response.data.student, isLoaded: true });
       if (response.data.student.files) {
-        if (response.data.student.files.signature != "") setIsSignatureUploaded(true);
-        if (response.data.student.files.thumbFinger != "") setIsFingerUploaded(true);
+        if (response.data.student.files.signature !== "") setIsSignatureUploaded(true);
+        if (response.data.student.files.thumbFinger !== "") setIsFingerUploaded(true);
       }
       if (response.data.student.picture) {
         setPictureSrc(response.data.student.picture);
       }
       toast.success(response.data.msg);
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response.data.msg);
     }
   }
 
@@ -73,7 +70,7 @@ const StudentAddInfo = () => {
         toast.success(response.data.msg);
         window.location.reload();
       } catch (error) {
-        toast.error(error.message);
+        toast.error(error.response.data.msg);
       }
     } else {
       toast.error("Please select both the fingerprints to upload.");
@@ -83,38 +80,76 @@ const StudentAddInfo = () => {
 
   const handleSignatureUpload = async (e) => {
     e.preventDefault();
-    if (e.target[0].files.length === 1) {
-      const formData = new FormData();
-      formData.append('signature', e.target[0].files[0]);
-      try {
-        const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-signature-fs", formData, axiosConfig);
-        setUploadMessage(response.data.msg);
-        toast.success(response.data.msg);
-        window.location.reload();
-      } catch (error) {
-        toast.error(error.message);
+    const img = document.createElement('img');
+    const objectUrl = URL.createObjectURL(e.target[0].files[0]);
+    img.src = objectUrl;
+    img.onload = async () => {
+      if (img.width === 300 && img.height === 30) {
+        const formData = new FormData();
+        formData.append('signature', e.target[0].files[0]);
+        try {
+          const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-signature-fs", formData, axiosConfig);
+          setUploadMessage(response.data.msg);
+          toast.success(response.data.msg);
+          window.location.reload();
+        } catch (error) {
+          toast.error(error.response.data.msg);
+        }
+      } else {
+        toast.error("Select image of dimension 300*30");
       }
-    } else {
-      toast.error("Please signature to upload.");
     }
+    // if (e.target[0].files.length === 1) {
+    //   const formData = new FormData();
+    //   formData.append('signature', e.target[0].files[0]);
+    //   try {
+    //     const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-signature-fs", formData, axiosConfig);
+    //     setUploadMessage(response.data.msg);
+    //     toast.success(response.data.msg);
+    //     window.location.reload();
+    //   } catch (error) {
+    //     toast.error(error.response.data.msg);
+    //   }
+    // } else {
+    //   toast.error("Please signature to upload.");
+    // }
   }
 
   const handlePictureUpload = async (e) => {
     e.preventDefault();
-    if (e.target[0].files.length === 1) {
-      const formData = new FormData();
-      formData.append('picture', e.target[0].files[0]);
-      try {
-        const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-picture-fs", formData, axiosConfig);
-        setUploadMessage(response.data.msg);
-        toast.success(response.data.msg);
-        window.location.reload();
-      } catch (error) {
-        toast.error(error.message);
+    const img = document.createElement('img');
+    const objectUrl = URL.createObjectURL(e.target[0].files[0]);
+    img.src = objectUrl;
+    img.onload = async () => {
+      if (img.width === 300 && img.height === 300) {
+        const formData = new FormData();
+        formData.append('picture', e.target[0].files[0]);
+        try {
+          const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-picture-fs", formData, axiosConfig);
+          setUploadMessage(response.data.msg);
+          toast.success(response.data.msg);
+          window.location.reload();
+        } catch (error) {
+          toast.error(error.response.data.msg);
+        }
+      } else {
+        toast.error("Select image of dimension 300*300");
       }
-    } else {
-      toast.error("Please select picture to upload.");
     }
+    // if (e.target[0].files.length === 1) {
+    //   const formData = new FormData();
+    //   formData.append('picture', e.target[0].files[0]);
+    //   try {
+    //     const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-picture-fs", formData, axiosConfig);
+    //     setUploadMessage(response.data.msg);
+    //     toast.success(response.data.msg);
+    //     window.location.reload();
+    //   } catch (error) {
+    //     toast.error(error.response.data.msg);
+    //   }
+    // } else {
+    //   toast.error("Please select picture to upload.");
+    // }
   }
 
   useEffect(() => {
@@ -136,9 +171,6 @@ const StudentAddInfo = () => {
                       alt="..."
                       className="rounded-circle"
                       src={pictureSrc}
-                      onError={(e) => {
-                        e.target.src = require("../../assets/img/theme/images.png")
-                      }}
                     />) : (<img
                       alt="..."
                       className="rounded-circle"
@@ -263,6 +295,11 @@ const StudentAddInfo = () => {
                       </Row>
                     ) : (<Row>
                       <Col lg="6">
+                        <h4 className="text-info"><i className="ni ni-check-bold" />No Signature Uploaded yet.</h4>
+                      </Col>
+                    </Row>)}
+                    <Row>
+                      <Col lg="6">
                         <FormGroup>
                           <InputGroup>
                             <InputGroupAddon addonType="prepend">
@@ -294,7 +331,7 @@ const StudentAddInfo = () => {
                           </InputGroup>
                         </FormGroup>
                       </Col>
-                    </Row>)}
+                    </Row>
                   </div>
                 </Form>
                 <Form role="form" onSubmit={(e) => handlePictureUpload(e)}>
@@ -309,6 +346,11 @@ const StudentAddInfo = () => {
                         </Col>
                       </Row>
                     ) : (<Row>
+                      <Col lg="6">
+                        <h4 className="text-info"><i className="ni ni-check-bold" />No Picture Uploaded yet.</h4>
+                      </Col>
+                    </Row>)}
+                    <Row>
                       <Col lg="6">
                         <FormGroup>
                           <InputGroup>
@@ -341,7 +383,7 @@ const StudentAddInfo = () => {
                           </InputGroup>
                         </FormGroup>
                       </Col>
-                    </Row>)}
+                    </Row>
                   </div>
                 </Form>
               </CardBody>

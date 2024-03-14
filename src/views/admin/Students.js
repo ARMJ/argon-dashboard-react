@@ -36,8 +36,6 @@ const Students = () => {
     const [data, setData] = useState({ msg: "", students: [], len: -1 });
     const [spinnerVisiblity, setSpinnerVisiblity] = useState(false);
     const [filterText, setFilterText] = useState({ name: "", roll: null, dept: null, session: null });
-    const [isOpen, setIsOpen] = useState(false);
-    const [isSessionOpen, setIsSessionOpen] = useState(false);
     const [selectedDepartment, setSelectedDepartment] = useState("");
     const [selectedSession, setselectedSession] = useState("");
     const departments = [
@@ -90,7 +88,7 @@ const Students = () => {
                     setSpinnerVisiblity(!spinnerVisiblity);
                 }
             } catch (error) {
-                toast.error(error.message);
+                toast.error(error.response.data.msg);
             }
         } else {
             toast.error("Please fill in all the fields");

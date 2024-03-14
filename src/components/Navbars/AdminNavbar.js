@@ -20,7 +20,7 @@ import {
 } from "reactstrap";
 
 const AdminNavbar = (props) => {
-  const [username, setUsername] = useState(localStorage.getItem("username") || "");
+  const [username] = useState(localStorage.getItem("username") || "");
   const navigate = useNavigate();
   const handleLogout = async (e) => {
     e.preventDefault();

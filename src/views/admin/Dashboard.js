@@ -29,7 +29,7 @@ import { ColorRing } from 'react-loader-spinner';
 import { toast } from 'react-toastify';
 
 const AdminDashboard = (props) => {
-  const [token, setToken] = useState(JSON.parse(localStorage.getItem("auth")) || "");
+  const [token] = useState(JSON.parse(localStorage.getItem("auth")) || "");
   const [data, setData] = useState({ msg: "", dashboardData: [], isLoaded: false });
   const [spinnerVisiblity, setSpinnerVisiblity] = useState(false);
 
@@ -66,7 +66,7 @@ const AdminDashboard = (props) => {
       };
       setSpinnerVisiblity(false);
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response.data.msg);
     }
   }
 

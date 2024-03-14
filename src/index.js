@@ -22,7 +22,7 @@ root.render(
       <Route path="/superAdmin/*" element={<SuperAdminLayout />} />
       <Route path="/student/*" element={<StudentLayout />} />
       <Route path="/auth/*" element={<AuthLayout />} />
-      <Route path="*" element={<Navigate to="/auth/login" replace />} />
+      <Route path="/*" element={<Navigate to="/auth/login" replace />} />
     </Routes>
   </BrowserRouter>
 );

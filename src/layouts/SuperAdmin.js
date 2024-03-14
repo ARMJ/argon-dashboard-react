@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useLocation, Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 // reactstrap components
 import { Container } from "reactstrap";
@@ -11,15 +11,12 @@ import AdminSidebar from "components/Sidebar/AdminSidebar.js";
 
 import { superAdminRoutesSidebar, superAdminRoutes } from "routes.js";
 
-import { ColorRing } from 'react-loader-spinner';
-
 import { ToastContainer, toast } from 'react-toastify'
 
 const SuperAdmin = (props) => {
   const mainContent = React.useRef(null);
-  const location = useLocation();
-  const [token, setToken] = useState(JSON.parse(localStorage.getItem("auth")) || "");
-  const [role, setRole] = useState(localStorage.getItem("role") || "");
+  const [token] = useState(JSON.parse(localStorage.getItem("auth")) || "");
+  const [role] = useState(localStorage.getItem("role") || "");
   const navigate = useNavigate();
 
 
@@ -28,7 +25,7 @@ const SuperAdmin = (props) => {
       toast.warning("Log in first");
       navigate("/auth/login");
     } else {
-      if (role == "user") {
+      if (role === "user") {
         toast.warning("Unauthorized");
         navigate("/user");
       } else if (role === "admin") {
@@ -39,7 +36,7 @@ const SuperAdmin = (props) => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
-  }, [location]);
+  }, []);
 
   const getRoutes = (superAdminRoutes) => {
     return superAdminRoutes.map((prop, key) => {

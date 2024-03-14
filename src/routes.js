@@ -1,4 +1,3 @@
-
 import AdminDashboard from "views/admin/Dashboard.js";
 import AdminProfile from "views/superAdmin/Profile.js";
 import Admins from "views/superAdmin/Admins.js";
@@ -8,12 +7,9 @@ import StudentDetails from "views/admin/StudentDetails.js";
 import StudentAddInfo from "views/admin/StudentAddInfo.js";
 import UpdateInfo from "views/student/UpdateInfo.js";
 import StudentProfile from "views/student/Profile.js";
-import Maps from "views/examples/Maps.js";
 import Register from "views/auth/Register.js";
 import StudentLogin from "views/auth/Login.js";
 import AdminLogin from "views/auth/Admin.js";
-import Tables from "views/examples/Tables.js";
-import Icons from "views/examples/Icons.js";
 
 var studentRoutes = [
   {
@@ -60,29 +56,7 @@ var adminRoutes = [
     icon: "ni ni-hat-3 text-primary",
     component: <StudentAddInfo />,
     layout: "/admin",
-  },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "ni ni-planet text-blue",
-    component: <Icons />,
-    layout: "/admin",
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: <Maps />,
-    layout: "/admin",
-  },
-
-  {
-    path: "/tables",
-    name: "Tables",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: <Tables />,
-    layout: "/admin",
-  },
+  }
 ];
 
 var adminRoutesSidebar = [

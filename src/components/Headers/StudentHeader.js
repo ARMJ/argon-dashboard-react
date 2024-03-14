@@ -2,7 +2,7 @@
 
 // reactstrap components
 import { useState } from "react";
-import { Button, Container, Row, Col } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 const StudentHeader = () => {
   const [username] = useState(localStorage.getItem('username') || "#");

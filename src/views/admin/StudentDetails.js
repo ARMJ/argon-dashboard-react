@@ -17,7 +17,7 @@ import {
 import Header from "components/Headers/Header.js";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -26,7 +26,7 @@ const StudentDetails = () => {
   const [token] = useState(JSON.parse(localStorage.getItem("auth")) || "");
   const [role] = useState(localStorage.getItem("role") || "");
   const [data, setData] = useState({ msg: "", student: {}, isLoaded: false });
-  const [pictureSrc, setPictureSrc] = useState("../../assets/img/theme/images.png");
+  const [pictureSrc, setPictureSrc] = useState();
 
 
   const fetchStudentDetails = async () => {
@@ -44,7 +44,7 @@ const StudentDetails = () => {
         setPictureSrc(response.data.student.picture);
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response.data.msg);
     }
   }
 

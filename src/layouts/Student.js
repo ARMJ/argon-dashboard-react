@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { useLocation, Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
 // core components
@@ -13,9 +13,8 @@ import { ToastContainer, toast } from 'react-toastify'
 
 const StudentLayout = (props) => {
   const mainContent = React.useRef(null);
-  const location = useLocation();
-  const [token, setToken] = useState(JSON.parse(localStorage.getItem("auth")) || "");
-  const [role, setRole] = useState(localStorage.getItem("role") || "");
+  const [token] = useState(JSON.parse(localStorage.getItem("auth")) || "");
+  const [role] = useState(localStorage.getItem("role") || "");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,7 +22,7 @@ const StudentLayout = (props) => {
       toast.warning("Log in first");
       navigate("/auth/login");
     } else {
-      if (role == "admin" || role == "superAdmin") {
+      if (role === "admin" || role === "superAdmin") {
         toast.warning("Unauthorized");
         navigate("/admin");
       }
@@ -31,7 +30,7 @@ const StudentLayout = (props) => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
-  }, [location]);
+  }, []);
 
   const getRoutes = (studentRoutes) => {
     return studentRoutes.map((prop, key) => {

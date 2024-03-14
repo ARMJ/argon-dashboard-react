@@ -12,14 +12,12 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  Row,
   Col,
-  FormEvent
-} from "reactstrap";
+  } from "reactstrap";
 
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
@@ -28,8 +26,8 @@ import { FaEyeSlash } from "react-icons/fa6";
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const [token, setToken] = useState(JSON.parse(localStorage.getItem("auth")) || "");
-  const [role, setRole] = useState(localStorage.getItem("role") || "");
+  const [token] = useState(JSON.parse(localStorage.getItem("auth")) || "");
+  const [role] = useState(localStorage.getItem("role") || "");
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +49,7 @@ const Register = () => {
           toast.success(response.data.msg);
           navigate("/auth/login");
         } catch (err) {
-          toast.error(err.message);
+          toast.error(err.response.data.msg);
         }
 
       } else {

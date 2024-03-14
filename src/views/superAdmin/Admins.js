@@ -1,31 +1,14 @@
 // reactstrap components
 import {
-    Badge,
     Card,
     CardHeader,
     CardFooter,
-    DropdownMenu,
-    DropdownItem,
-    UncontrolledDropdown,
-    DropdownToggle,
-    Media,
-    Pagination,
-    PaginationItem,
-    PaginationLink,
-    Progress,
     Table,
     Container,
     Row,
-    UncontrolledTooltip,
     Input,
     Button,
     CardBody,
-    FormGroup,
-    Form,
-    InputGroupAddon,
-    InputGroupText,
-    InputGroup,
-    Dropdown,
 } from "reactstrap";
 
 import { useState, useEffect } from 'react';
@@ -36,15 +19,13 @@ import Header from "components/Headers/Header.js";
 
 import { toast } from 'react-toastify';
 import { ColorRing } from 'react-loader-spinner';
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Admins = () => {
-    const [token, setToken] = useState(JSON.parse(localStorage.getItem("auth")) || "");
-    const [role, setRole] = useState(localStorage.getItem("role") || "");
+    const [token] = useState(JSON.parse(localStorage.getItem("auth")) || "");
     const [data, setData] = useState({ msg: "", admins: [], isLoaded: false });
     const [spinnerVisiblity, setSpinnerVisiblity] = useState(false);
     const [filterText, setFilterText] = useState({ name: "", roll: null, dept: null, session: null });
-    const navigate = useNavigate();
     let axiosConfig = {
         headers: {
             'Authorization': `Bearer ${token}`
@@ -53,14 +34,14 @@ const Admins = () => {
     const fetchAdmins = async () => {
 
         try {
-            const response = await axios.get(process.env.REACT_APP_SERVER_BASE_URL+"admin/getAdmins", axiosConfig);
+            const response = await axios.get(process.env.REACT_APP_SERVER_BASE_URL + "admin/getAdmins", axiosConfig);
             setData({ msg: response.data.msg, admins: response.data.admins, isLoaded: true });
             toast.success(response.data.msg);
             if (spinnerVisiblity) {
                 setSpinnerVisiblity(!spinnerVisiblity);
             }
         } catch (error) {
-            toast.error(error.message);
+            toast.error(error.response.data.msg);
         }
     };
 
@@ -70,14 +51,11 @@ const Admins = () => {
             id: e
         }
         try {
-            const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL+"admin/deleteAdmin", deleteData, axiosConfig);
-            setData({ msg: response.data.msg, admins: response.data.admins, isLoaded: true });
+            const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/deleteAdmin", deleteData, axiosConfig);
             toast.success(response.data.msg);
-            if (spinnerVisiblity) {
-                setSpinnerVisiblity(!spinnerVisiblity);
-            }
+            fetchAdmins();
         } catch (error) {
-            toast.error(error.message);
+            toast.error(error.response.data.msg);
         }
     }
 

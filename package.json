@@ -1,11 +1,11 @@
 {
   "name": "just-student-database",
-  "version": "1.2.4",
+  "version": "1.0",
   "description": "JUST Student Database by Jamil",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/creativetimofficial/argon-dashboard-react.git"
+    "url": "git+https://github.com/ARMJ/just-student-database.git"
   },
   "keywords": [
     "react",
@@ -19,11 +19,7 @@
     "just-student-database"
   ],
   "author": "Abu Rafe Md Jamil",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/creativetimofficial/argon-dashboard-react/issues"
-  },
-  "homepage": "https://demos.creative-tim.com/argon-dashboard-react/",
+  "homepage": "http://students.just.edu.bd/",
   "scripts": {
     "start": "set PUBLIC_URL=just-student-database&&react-scripts start",
     "build": "react-scripts build",

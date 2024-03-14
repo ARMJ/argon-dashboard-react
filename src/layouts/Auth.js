@@ -10,7 +10,7 @@ import AuthFooter from "components/Footers/AuthFooter.js";
 
 import { authRoutes } from "routes.js";
 
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 
 const Auth = (props) => {
   // require("dotenv").config();

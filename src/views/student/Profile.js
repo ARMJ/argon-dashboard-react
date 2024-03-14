@@ -15,10 +15,8 @@ import {
 } from "reactstrap";
 // core components
 
-import Header from "components/Headers/Header.js";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import axios from "axios";
 import { Link } from "react-router-dom";
 import StudentHeader from "components/Headers/StudentHeader.js";
@@ -44,7 +42,7 @@ const StudentProfile = () => {
         setPictureSrc(response.data.student.picture);
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response.data.msg);
     }
   }
 
