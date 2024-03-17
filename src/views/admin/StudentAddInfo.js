@@ -246,6 +246,11 @@ const StudentAddInfo = () => {
                       </Col>
                     </Row>) : (<Row>
                       <Col lg="6">
+                        <h4 className="text-warning"><i className="ni ni-check-bold" />No Fingerprints Uploaded yet.</h4>
+                      </Col>
+                    </Row>)}
+                    <Row>
+                      <Col lg="6">
                         <FormGroup>
                           <InputGroup>
                             <InputGroupAddon addonType="prepend">
@@ -279,7 +284,7 @@ const StudentAddInfo = () => {
                           </InputGroup>
                         </FormGroup>
                       </Col>
-                    </Row>)}
+                    </Row>
                   </div>
                 </Form>
                 <Form role="form" onSubmit={(e) => handleSignatureUpload(e)}>
@@ -295,7 +300,7 @@ const StudentAddInfo = () => {
                       </Row>
                     ) : (<Row>
                       <Col lg="6">
-                        <h4 className="text-info"><i className="ni ni-check-bold" />No Signature Uploaded yet.</h4>
+                        <h4 className="text-warning"><i className="ni ni-check-bold" />No Signature Uploaded yet.</h4>
                       </Col>
                     </Row>)}
                     <Row>
@@ -347,7 +352,7 @@ const StudentAddInfo = () => {
                       </Row>
                     ) : (<Row>
                       <Col lg="6">
-                        <h4 className="text-info"><i className="ni ni-check-bold" />No Picture Uploaded yet.</h4>
+                        <h4 className="text-warning"><i className="ni ni-check-bold" />No Picture Uploaded yet.</h4>
                       </Col>
                     </Row>)}
                     <Row>

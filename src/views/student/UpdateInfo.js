@@ -234,7 +234,7 @@ const UpdateInfo = (props) => {
                       </Row>
                     ) : (<Row>
                       <Col lg="6">
-                        <h4 className="text-info"><i className="ni ni-check-bold" />No Signature Uploaded yet.</h4>
+                        <h4 className="text-warning"><i className="ni ni-check-bold" />No Signature Uploaded yet.</h4>
                       </Col>
                     </Row>)}
                     <Row>
@@ -286,7 +286,7 @@ const UpdateInfo = (props) => {
                       </Row>
                     ) : (<Row>
                       <Col lg="6">
-                        <h4 className="text-info"><i className="ni ni-check-bold" />No Picture Uploaded yet.</h4>
+                        <h4 className="text-warning"><i className="ni ni-check-bold" />No Picture Uploaded yet.</h4>
                       </Col>
                     </Row>)}
                     <Row>
