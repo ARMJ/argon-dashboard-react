@@ -28,7 +28,6 @@ const StudentAddInfo = () => {
   const [role] = useState(localStorage.getItem("role") || "");
   const [data, setData] = useState({ msg: "", student: {}, isLoaded: false });
   const [pictureSrc, setPictureSrc] = useState();
-  const [setUploadMessage] = useState("");
   const [isSignatureUploaded, setIsSignatureUploaded] = useState(false);
   const [isFingerUploaded, setIsFingerUploaded] = useState(false);
 
@@ -66,7 +65,6 @@ const StudentAddInfo = () => {
       formData.append('fingerprints', e.target[0].files[1]);
       try {
         const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-fingerprints-fs", formData, axiosConfig);
-        setUploadMessage(response.data.msg);
         toast.success(response.data.msg);
         window.location.reload();
       } catch (error) {
@@ -84,19 +82,18 @@ const StudentAddInfo = () => {
     const objectUrl = URL.createObjectURL(e.target[0].files[0]);
     img.src = objectUrl;
     img.onload = async () => {
-      if (img.width === 300 && img.height === 30) {
+      if (img.width === 300 && img.height === 80) {
         const formData = new FormData();
         formData.append('signature', e.target[0].files[0]);
         try {
           const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-signature-fs", formData, axiosConfig);
-          setUploadMessage(response.data.msg);
           toast.success(response.data.msg);
           window.location.reload();
         } catch (error) {
           toast.error(error.response.data.msg);
         }
       } else {
-        toast.error("Select image of dimension 300*30");
+        toast.error("Select image of dimension 300*80");
       }
     }
     // if (e.target[0].files.length === 1) {
@@ -126,7 +123,6 @@ const StudentAddInfo = () => {
         formData.append('picture', e.target[0].files[0]);
         try {
           const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-picture-fs", formData, axiosConfig);
-          setUploadMessage(response.data.msg);
           toast.success(response.data.msg);
           window.location.reload();
         } catch (error) {
@@ -310,7 +306,7 @@ const StudentAddInfo = () => {
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
                                 <i className="ni ni-cloud-upload-96" />
-                                Select Signature
+                                Select Signature <span className="text-danger"> (300 * 80)</span> 
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
@@ -330,7 +326,7 @@ const StudentAddInfo = () => {
                             <div className="text-center">
                               <Button className="my-4" color="primary" type="submit">
                                 <i className="ni ni-cloud-upload-96" />
-                                Upload Signature
+                                Upload Signature (.tpl file)
                               </Button>
                             </div>
                           </InputGroup>
@@ -362,7 +358,7 @@ const StudentAddInfo = () => {
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
                                 <i className="ni ni-cloud-upload-96" />
-                                Select Picture
+                                Select Picture <span className="text-danger"> (300 * 300)</span> 
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
