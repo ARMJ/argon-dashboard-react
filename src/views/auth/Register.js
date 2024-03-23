@@ -49,7 +49,11 @@ const Register = () => {
           toast.success(response.data.msg);
           navigate("/auth/login");
         } catch (err) {
-          toast.error(err.response.data.msg);
+          if(err.response){
+            toast.error(err.response.data.msg);
+          }else{
+            toast.error(err.message);
+          }
         }
 
       } else {

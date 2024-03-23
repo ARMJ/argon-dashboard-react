@@ -65,8 +65,12 @@ const AdminDashboard = (props) => {
         ],
       };
       setSpinnerVisiblity(false);
-    } catch (error) {
-      toast.error(error.response.data.msg);
+    } catch (err) {
+      if(err.response){
+        toast.error(err.response.data.msg);
+      }else{
+        toast.error(err.message);
+      }
     }
   }
 

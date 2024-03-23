@@ -50,8 +50,12 @@ const UpdateInfo = (props) => {
         setIsPictureUploaded(true);
       }
       toast.success(response.data.msg);
-    } catch (error) {
-      toast.error(error.response.data.msg);
+    } catch (err) {
+      if (err.response) {
+        toast.error(err.response.data.msg);
+      } else {
+        toast.error(err.message);
+      }
     }
   }
 
@@ -70,8 +74,12 @@ const UpdateInfo = (props) => {
           const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-signature-fs", formData, axiosConfig);
           toast.success(response.data.msg);
           window.location.reload();
-        } catch (error) {
-          toast.error(error.response.data.msg);
+        } catch (err) {
+          if (err.response) {
+            toast.error(err.response.data.msg);
+          } else {
+            toast.error(err.message);
+          }
         }
       } else {
         toast.error("Select image of dimension 300*80");
@@ -109,8 +117,13 @@ const UpdateInfo = (props) => {
           const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-picture-fs", formData, axiosConfig);
           toast.success(response.data.msg);
           window.location.reload();
-        } catch (error) {
-          toast.error(error.response.data.msg);
+        } catch (err) {
+          if(err.response){
+            toast.error(err.response.data.msg);
+          }else{
+            toast.error(err.message);
+          }
+          
         }
       } else {
         toast.error("Select image of dimension 300*300");
@@ -241,7 +254,7 @@ const UpdateInfo = (props) => {
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
                                 <i className="ni ni-cloud-upload-96" />
-                                Select Signature <span className="text-danger"> (300 * 80)</span> 
+                                Select Signature <span className="text-danger"> (300 * 80)</span>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
@@ -293,7 +306,7 @@ const UpdateInfo = (props) => {
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
                                 <i className="ni ni-cloud-upload-96" />
-                                Select Picture <span className="text-danger"> (300 * 300)</span> 
+                                Select Picture <span className="text-danger"> (300 * 300)</span>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input

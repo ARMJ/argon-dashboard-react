@@ -43,8 +43,12 @@ const StudentDetails = () => {
       if (response.data.student.picture) {
         setPictureSrc(response.data.student.picture);
       }
-    } catch (error) {
-      toast.error(error.response.data.msg);
+    } catch (err) {
+      if (err.response) {
+        toast.error(err.response.data.msg);
+      } else {
+        toast.error(err.message);
+      }
     }
   }
 

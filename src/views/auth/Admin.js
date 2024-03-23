@@ -50,7 +50,11 @@ const AdminLogin = () => {
         localStorage.setItem('username', response.data.name);
         navigate(response.data.navigate);
       } catch (err) {
-        toast.error(err.response.data.msg);
+        if(err.response){
+          toast.error(err.response.data.msg);
+        }else{
+          toast.error(err.message);
+        }
       }
     } else {
       toast.error("Please fill in all the fields");

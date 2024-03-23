@@ -40,8 +40,12 @@ const Admins = () => {
             if (spinnerVisiblity) {
                 setSpinnerVisiblity(!spinnerVisiblity);
             }
-        } catch (error) {
-            toast.error(error.response.data.msg);
+        } catch (err) {
+            if(err.response){
+                toast.error(err.response.data.msg);
+            }else{
+                toast.error(err.message);
+            }
         }
     };
 
@@ -54,8 +58,13 @@ const Admins = () => {
             const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/deleteAdmin", deleteData, axiosConfig);
             toast.success(response.data.msg);
             fetchAdmins();
-        } catch (error) {
-            toast.error(error.response.data.msg);
+        } catch (err) {
+            if(err.response){
+                toast.error(err.response.data.msg);
+            }else{
+                toast.error(err.message);
+            }
+            
         }
     }
 

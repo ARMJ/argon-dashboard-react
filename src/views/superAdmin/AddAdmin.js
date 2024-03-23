@@ -53,7 +53,11 @@ const AddAdmin = () => {
                     toast.success(response.data.msg);
                     navigate("/superAdmin/admins");
                 } catch (err) {
-                    toast.error(err.response.data.msg);
+                    if(err.response){
+                        toast.error(err.response.data.msg);
+                      }else{
+                        toast.error(err.message);
+                      }
                 }
 
             } else {

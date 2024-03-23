@@ -87,8 +87,12 @@ const Students = () => {
                 if (spinnerVisiblity) {
                     setSpinnerVisiblity(!spinnerVisiblity);
                 }
-            } catch (error) {
-                toast.error(error.response.data.msg);
+            } catch (err) {
+                if (err.response) {
+                    toast.error(err.response.data.msg);
+                } else {
+                    toast.error(err.message);
+                }
             }
         } else {
             toast.error("Please fill in all the fields");
