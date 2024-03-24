@@ -71,7 +71,7 @@ const Students = () => {
 
     const handleSearchStudents = async (e) => {
         e.preventDefault();
-        if (selectedDepartment.length > 0 && selectedSession.length > 0) {
+        if (selectedDepartment.length > 0) {
             let axiosConfig = {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -79,7 +79,9 @@ const Students = () => {
             };
 
             try {
-                const response = await axios.get(process.env.REACT_APP_SERVER_BASE_URL + "admin/searchStudents?dept=" + selectedDepartment + "&session=" + selectedSession, axiosConfig);
+                let query = "dept=" + selectedDepartment;
+                if (selectedSession.length > 0) query += "&session=" + selectedSession;
+                const response = await axios.get(process.env.REACT_APP_SERVER_BASE_URL + "admin/searchStudents?" + query, axiosConfig);
                 setData({ msg: response.data.msg, students: response.data.students, len: response.data.students.length });
 
                 // setPages(Math.ceil(response.data.students.length/itemsPerPage));
@@ -188,7 +190,6 @@ const Students = () => {
                                                 id="exampleSelect"
                                                 onChange={(e) => setselectedSession(e.target.value)}
                                                 value={selectedSession}
-                                                required
                                             >
                                                 <option value={null}>Select Session</option>
                                                 {sessions.map((session) => (

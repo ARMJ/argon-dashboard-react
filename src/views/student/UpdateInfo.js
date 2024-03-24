@@ -27,9 +27,10 @@ const UpdateInfo = (props) => {
   const [token] = useState(JSON.parse(localStorage.getItem("auth")) || "");
   const [role] = useState(localStorage.getItem("role") || "");
   const [data, setData] = useState({ msg: "", student: {}, isLoaded: false });
-  const [pictureSrc, setPictureSrc] = useState("../../assets/img/theme/images.png");
+  const [pictureSrc, setPictureSrc] = useState("");
   const [isSignatureUploaded, setIsSignatureUploaded] = useState(false);
   const [isPictureUploaded, setIsPictureUploaded] = useState(false);
+  const [signatureSrc, setSignatureSrc] = useState("");
 
   let axiosConfig = {
     headers: {
@@ -43,7 +44,10 @@ const UpdateInfo = (props) => {
       const response = await axios.get(process.env.REACT_APP_SERVER_BASE_URL + "student/studentDetails", axiosConfig);
       setData({ msg: response.data.msg, student: response.data.student, isLoaded: true });
       if (response.data.student.files) {
-        if (response.data.student.files.signature !== "") setIsSignatureUploaded(true);
+        if (response.data.student.files.signature !== "") {
+          setIsSignatureUploaded(true);
+          setSignatureSrc(response.data.student.files.signature);
+        }
       }
       if (response.data.student.picture) {
         setPictureSrc(response.data.student.picture);
@@ -85,22 +89,6 @@ const UpdateInfo = (props) => {
         toast.error("Select image of dimension 300*80");
       }
     }
-
-    // if (e.target[0].files.length === 1) {
-    //   const formData = new FormData();
-    //   formData.append('signature', e.target[0].files[0]);
-    //   axiosConfig.headers.stdid = data.student._id;
-    //   try {
-    //     const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-signature-fs", formData, axiosConfig);
-    //     setUploadMessage(response.data.msg);
-    //     toast.success(response.data.msg);
-    //     window.location.reload();
-    //   } catch (error) {
-    //     toast.error(error.response.data.msg);
-    //   }
-    // } else {
-    //   toast.error("Please signature to upload.");
-    // }
   }
 
   const handlePictureUpload = async (e) => {
@@ -118,34 +106,17 @@ const UpdateInfo = (props) => {
           toast.success(response.data.msg);
           window.location.reload();
         } catch (err) {
-          if(err.response){
+          if (err.response) {
             toast.error(err.response.data.msg);
-          }else{
+          } else {
             toast.error(err.message);
           }
-          
+
         }
       } else {
         toast.error("Select image of dimension 300*300");
       }
     }
-
-    // if (e.target[0].files.length === 1) {
-    //   const formData = new FormData();
-    //   formData.append('picture', e.target[0].files[0]);
-    //   axiosConfig.headers.stdid = data.student._id;
-    //   console.log(axiosConfig);
-    //   try {
-    //     const response = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + "admin/upload-picture-fs", formData, axiosConfig);
-    //     setUploadMessage(response.data.msg);
-    //     toast.success(response.data.msg);
-    //     window.location.reload();
-    //   } catch (error) {
-    //     toast.error(error.response.data.msg);
-    //   }
-    // } else {
-    //   toast.error("Please select picture to upload.");
-    // }
   }
 
   useEffect(() => {
@@ -176,9 +147,27 @@ const UpdateInfo = (props) => {
                 </Col>
               </Row>
               <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-
               </CardHeader>
               <CardBody className="pt-0 pt-md-4">
+                <Row>
+                  <div className="col">
+                    <div className="card-profile-stats d-flex justify-content-center mt-md-5">
+                      <div className="text-center">
+                        <div className="card-profile-image">
+                          {data.student.files ? (<img
+                            alt="..."
+                            className="thumbnail"
+                            src={signatureSrc}
+                          />) : (<img
+                            alt="no signature"
+                            className="thumbnail"
+                            src={require("../../assets/img/theme/No_signature.png")}
+                          />)}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Row>
                 <Row>
                   <div className="col">
                     <div className="card-profile-stats d-flex justify-content-center mt-md-5">

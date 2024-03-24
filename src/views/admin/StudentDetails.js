@@ -26,8 +26,8 @@ const StudentDetails = () => {
   const [token] = useState(JSON.parse(localStorage.getItem("auth")) || "");
   const [role] = useState(localStorage.getItem("role") || "");
   const [data, setData] = useState({ msg: "", student: {}, isLoaded: false });
-  const [pictureSrc, setPictureSrc] = useState();
-
+  const [pictureSrc, setPictureSrc] = useState("");
+  const [signatureSrc, setSignatureSrc] = useState("");
 
   const fetchStudentDetails = async () => {
     let axiosConfig = {
@@ -42,6 +42,11 @@ const StudentDetails = () => {
       toast.success(response.data.msg);
       if (response.data.student.picture) {
         setPictureSrc(response.data.student.picture);
+      }
+      if (response.data.student.files) {
+        if (response.data.student.files.signature !== "") {
+          setSignatureSrc(response.data.student.files.signature);
+        }
       }
     } catch (err) {
       if (err.response) {
@@ -82,6 +87,25 @@ const StudentDetails = () => {
               <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
               </CardHeader>
               <CardBody className="pt-0 pt-md-4">
+                <Row>
+                  <div className="col">
+                    <div className="card-profile-stats d-flex justify-content-center mt-md-5">
+                      <div className="text-center">
+                        <div className="card-profile-image">
+                          {data.student.files ? (<img
+                            alt="..."
+                            className="thumbnail"
+                            src={signatureSrc}
+                          />) : (<img
+                            alt="no signature"
+                            className="thumbnail"
+                            src={require("../../assets/img/theme/No_signature.png")}
+                          />)}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Row>
                 <Row>
                   <div className="col">
                     <div className="card-profile-stats d-flex justify-content-center mt-md-5">
